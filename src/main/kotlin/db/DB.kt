@@ -27,7 +27,7 @@ class DB {
     }
 
     init {
-        Database.connect("jdbc:mysql://127.0.0.1:13306/chord_dht_repo", "com.mysql.jdbc.Driver","root","mysql")
+        Database.connect("jdbc:mysql://127.0.0.1:13306/chord_dht_repo?useSSL=false", "com.mysql.jdbc.Driver","root","mysql")
     }
 
 }

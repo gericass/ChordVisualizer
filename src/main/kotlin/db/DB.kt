@@ -3,8 +3,6 @@ package db
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
-data class Node(var id: Int,var name: String, var ip: String, var hash:String, var successor: String, var predecessor: String)
-
 class DB {
 
     object chord_dht : Table() {

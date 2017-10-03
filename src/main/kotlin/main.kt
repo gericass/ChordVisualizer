@@ -1,6 +1,7 @@
 package main
 
 import db.*
+import canvas.*
 
 fun main(args: Array<String>) {
     val db = DB()
@@ -8,4 +9,5 @@ fun main(args: Array<String>) {
     for(n in allNodes){
         println(n.id)
     }
+    LineTest()
 }

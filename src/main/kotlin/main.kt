@@ -9,5 +9,5 @@ fun main(args: Array<String>) {
     for(n in allNodes){
         println(n.id)
     }
-    LineTest()
+    Canvas().run(args)
 }

@@ -1,24 +1,22 @@
 package canvas
 
 
-import java.awt.*
+import java.*
+import processing.core.PApplet
 
-internal class MyCanvas : Canvas() {
-    override fun paint(g: Graphics) {
-        g.drawLine(1, 1, 500, 500)
+class Canvas : PApplet () {
+    override fun settings() {
+        size(400, 300)
     }
-}
-internal class LineTest : Frame("LineTest") {
-    init {
-        setSize(500, 500)
-        layout = BorderLayout()
-        val mc1 = MyCanvas()
-        add(mc1, BorderLayout.CENTER)
-        show()
+    override fun setup() {
+        background(0.0f)
     }
-    companion object {
-        @JvmStatic fun main(args: Array<String>) {
-            LineTest()
-        }
+
+    override fun draw() {
+        fill(255)
+        noStroke()
+        ellipse(mouseX.toFloat(), mouseY.toFloat(), 10.0f, 10.0f)
     }
+
+    fun run(args: Array<String>) = main(Canvas().javaClass.name)
 }

@@ -7,9 +7,9 @@ import db.*
 
 class Canvas() : PApplet() {
 
-    var conn: DB
+    private var conn: DB
 
-    fun getHashList(): List<String> {
+    private fun getHashList(): List<String> {
         val hashes = mutableListOf<String>()
         val nodeList = conn.getAllNodes()
         for (i in nodeList) {
@@ -59,7 +59,6 @@ class Canvas() : PApplet() {
         noFill()
         translate(width / 2.toFloat(), height / 2.toFloat())
         ellipse(0.0f, 0.0f, 300.0f, 300.0f)
-
 
         // ノード
         val angle = (PI * 2.0f) / hashListSize

@@ -37,11 +37,27 @@ class DB {
 
     fun getNodeByHash(hash: String): Node {
         var node: Node? = null
+        /*
+        transaction {
+            (chord_dht.select { chord_dht.hash.eq(hash) }).forEach {
+                node = Node(
+                        it[chord_dht.id],
+                        it[chord_dht.name],
+                        it[chord_dht.ip],
+                        it[chord_dht.hash],
+                        it[chord_dht.successor],
+                        it[chord_dht.predecessor])
+            }
+        }
+        */
+
+
         for (i in nodes) {
             if (i.hash == hash) {
                 node = i
             }
         }
+
         return node as Node
     }
 

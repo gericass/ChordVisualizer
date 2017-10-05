@@ -1,7 +1,5 @@
 package canvas
 
-
-import java.*
 import processing.core.PApplet
 import db.*
 
@@ -9,14 +7,42 @@ class Canvas() : PApplet() {
 
     private var conn: DB
 
-    private fun getHashList(): List<String> {
+    private var hashList: List<String> = listOf()
+
+    private fun setHashList() {
         val hashes = mutableListOf<String>()
         val nodeList = conn.getAllNodes()
         for (i in nodeList) {
             hashes.add(i.hash)
         }
+        hashList = hashes.toList()
 
-        return hashes.sorted()
+    }
+
+    fun getNodeIndexByHash(hash: String): Int {
+
+        val index: Int = hashList.indexOf(hash)
+        return index
+    }
+
+    private fun drawBezier(hashListSize: Float) {
+
+        val angle = (PI * 2.0f) / hashListSize
+        var node: Node
+        var successorIndex: Int
+        var predecessorIndex: Int
+        for (i in 0..hashListSize.toInt() - 1) {
+            node = conn.getNodeByHash(hashList.get(i)) // ifの中に書かないと重い
+            val x = 150.0f * cos((angle * i) - PI / 2) //対象ノードの中心のx座標
+            val y = 150.0f * sin((angle * i) - PI / 2) //対象ノードの中心のy座標
+            successorIndex = getNodeIndexByHash(node.successor)
+            predecessorIndex = getNodeIndexByHash(node.predecessor)
+            val sucX = 150.0f * cos((angle * successorIndex) - PI / 2)
+            val sucY = 150.0f * sin((angle * successorIndex) - PI / 2)
+
+            bezier(x, y,  x+10f, y+5f,  x+30f, y+70f,  sucX, sucY)
+        }
+
     }
 
     private fun showNodeDetails(hashListSize: Float) {
@@ -25,17 +51,19 @@ class Canvas() : PApplet() {
         for (i in 0..hashListSize.toInt() - 1) {
             val mX = (mouseX - width / 2).toFloat()
             val mY = (mouseY - height / 2).toFloat()
-            val x = 150.0f * cos((angle * i) - PI / 2)
-            val y = 150.0f * sin((angle * i) - PI / 2)
+            val x = 150.0f * cos((angle * i) - PI / 2) //対象ノードの中心のx座標
+            val y = 150.0f * sin((angle * i) - PI / 2) //対象ノードの中心のy座標
+
             if (x - 10 <= mX && mX < x + 10 && y - 10 <= mY && mY < y + 10) {
+                node = conn.getNodeByHash(hashList.get(i))
                 rect(mX, mY - 50, 300f, 50f)
-                node = conn.getNodeByHash(getHashList().get(i))
                 fill(0f, 102f, 153f)
                 text("Hash: " + node.hash.slice(0..32) + "\n          " + node.hash.slice(33..63), mX + 10, mY - 30)
                 rotate(angle * i)
                 ellipse(0.0f, -(height / 2.0f) + ((height / 2.0f) - 150.0f), 20.0f, 20.0f)
                 rotate(-angle * i)
             }
+
         }
     }
 
@@ -48,7 +76,8 @@ class Canvas() : PApplet() {
     }
 
     override fun draw() {
-        val hashList = getHashList()
+        setHashList()
+
         var count = 0.0f
         val hashListSize = hashList.size.toFloat()
 
@@ -68,6 +97,7 @@ class Canvas() : PApplet() {
             rotate(-angle * count)
             count++
         }
+        drawBezier(hashListSize)
         showNodeDetails(hashListSize)
 
     }

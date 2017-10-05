@@ -1,8 +1,4 @@
 package db
 
 data class Node(var id: Int, var name: String, var ip: String,
-                var hash: String, var successor: String, var predecessor: String) {
-
-    constructor() : this(id = 0, name = "", hash = "", ip = "", successor = "", predecessor = "")
-
-}
+                var hash: String, var successor: String, var predecessor: String)

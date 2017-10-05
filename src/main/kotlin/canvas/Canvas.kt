@@ -15,7 +15,7 @@ class Canvas() : PApplet() {
         for (i in nodeList) {
             hashes.add(i.hash)
         }
-        hashList = hashes.toList()
+        hashList = hashes.toList().sorted()
 
     }
 

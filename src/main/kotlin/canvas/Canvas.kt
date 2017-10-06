@@ -19,12 +19,6 @@ class Canvas() : PApplet() {
 
     }
 
-    fun getNodeIndexByHash(hash: String): Int {
-
-        val index: Int = hashList.indexOf(hash)
-        return index
-    }
-
     private fun drawBezier(hashListSize: Float) {
 
         val angle = (PI * 2.0f) / hashListSize
@@ -35,8 +29,8 @@ class Canvas() : PApplet() {
             node = conn.getNodeByHash(hashList.get(i)) // ifの中に書かないと重い
             val x = 150.0f * cos((angle * i) - PI / 2) //対象ノードの中心のx座標
             val y = 150.0f * sin((angle * i) - PI / 2) //対象ノードの中心のy座標
-            successorIndex = getNodeIndexByHash(node.successor)
-            predecessorIndex = getNodeIndexByHash(node.predecessor)
+            successorIndex = hashList.indexOf(node.successor)
+            predecessorIndex = hashList.indexOf(node.predecessor)
             val sucX = 150.0f * cos((angle * successorIndex) - PI / 2)
             val sucY = 150.0f * sin((angle * successorIndex) - PI / 2)
 

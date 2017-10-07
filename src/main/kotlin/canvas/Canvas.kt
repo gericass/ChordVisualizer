@@ -51,11 +51,19 @@ class Canvas() : PApplet() {
             if (x - 10 <= mX && mX < x + 10 && y - 10 <= mY && mY < y + 10) {
                 node = conn.getNodeByHash(hashList.get(i))
                 rect(mX, mY - 50, 300f, 50f)
-                fill(0f, 102f, 153f)
+                fill(77f,179f,87f)
                 text("Hash: " + node.hash.slice(0..32) + "\n          " + node.hash.slice(33..63), mX + 10, mY - 30)
                 rotate(angle * i)
                 ellipse(0.0f, -(height / 2.0f) + ((height / 2.0f) - 150.0f), 20.0f, 20.0f)
                 rotate(-angle * i)
+                rotate(angle * hashList.indexOf(node.successor))
+                fill(0f, 102f, 153f)
+                ellipse(0.0f, -(height / 2.0f) + ((height / 2.0f) - 150.0f), 20.0f, 20.0f)
+                rotate(-angle * hashList.indexOf(node.successor))
+                rotate(angle * hashList.indexOf(node.predecessor))
+                fill(184f,48f,29f)
+                ellipse(0.0f, -(height / 2.0f) + ((height / 2.0f) - 150.0f), 20.0f, 20.0f)
+                rotate(-angle * hashList.indexOf(node.predecessor))
             }
 
         }
